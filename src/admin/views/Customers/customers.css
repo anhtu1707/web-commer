@@ -1,0 +1,134 @@
+/* Customer Status Badges */
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-active {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.status-inactive {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-blocked {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+
+/* Customer Group Badges */
+
+.group-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+.group-regular {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.group-vip {
+    background-color: #cff4fc;
+    color: #055160;
+}
+
+.group-wholesale {
+    background-color: #e2e3e5;
+    color: #41464b;
+}
+
+
+/* Table Styles */
+
+.table th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+
+/* Action Buttons */
+
+.action-buttons .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.action-buttons .btn+.btn {
+    margin-left: 0.5rem;
+}
+
+
+/* Customer Detail Modal */
+
+.customer-info-item {
+    margin-bottom: 1rem;
+}
+
+.customer-info-label {
+    font-weight: 500;
+    color: #6c757d;
+    margin-bottom: 0.25rem;
+}
+
+.customer-info-value {
+    color: #212529;
+}
+
+.customer-stats-item {
+    text-align: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.stats-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #0d6efd;
+    margin-bottom: 0.5rem;
+}
+
+.stats-label {
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+
+/* Order History */
+
+.order-history-item {
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.order-history-item:last-child {
+    border-bottom: none;
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+    }
+    .action-buttons .btn+.btn {
+        margin-left: 0;
+        margin-top: 0.5rem;
+    }
+}

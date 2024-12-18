@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Đơn Hàng - Phúc An Solutions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/src/admin/layouts/AdminLayout.css" rel="stylesheet">
+    <link href="orders.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <!-- Copy sidebar from dashboard -->
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="admin-header">
+                <!-- Copy header from dashboard -->
+            </header>
+
+            <!-- Orders Content -->
+            <div class="content-wrapper">
+                <div class="container-fluid">
+                    <!-- Page Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="page-title">Quản Lý Đơn Hàng</h2>
+                        <div class="page-actions">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exportModal">
+                                <i class="fas fa-file-export me-2"></i>Xuất Excel
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <label class="form-label">Trạng thái</label>
+                                    <select class="form-select" id="statusFilter">
+                                        <option value="">Tất cả</option>
+                                        <option value="pending">Chờ xử lý</option>
+                                        <option value="processing">Đang xử lý</option>
+                                        <option value="shipped">Đang giao</option>
+                                        <option value="completed">Đã giao</option>
+                                        <option value="cancelled">Đã hủy</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Từ ngày</label>
+                                    <input type="date" class="form-control" id="dateFrom">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Đến ngày</label>
+                                    <input type="date" class="form-control" id="dateTo">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Tìm kiếm</label>
+                                    <input type="text" class="form-control" id="searchOrder" placeholder="Mã đơn, tên KH...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Orders Table -->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input type="checkbox" class="form-check-input" id="selectAll">
+                                            </th>
+                                            <th>Mã đơn</th>
+                                            <th>Ngày đặt</th>
+                                            <th>Khách hàng</th>
+                                            <th>Tổng tiền</th>
+                                            <th>Trạng thái</th>
+                                            <th>Thanh toán</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ordersTableBody">
+                                        <!-- Orders will be loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Pagination -->
+                            <nav aria-label="Page navigation" class="mt-4">
+                                <ul class="pagination justify-content-center" id="ordersPagination">
+                                    <!-- Pagination will be generated here -->
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Detail Modal -->
+    <div class="modal fade" id="orderDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chi Tiết Đơn Hàng #<span id="orderDetailId"></span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Order Info -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h6>Thông Tin Khách Hàng</h6>
+                            <div id="customerInfo"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Thông Tin Giao Hàng</h6>
+                            <div id="shippingInfo"></div>
+                        </div>
+                    </div>
+
+                    <!-- Order Items -->
+                    <h6>Sản Phẩm</h6>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Tổng</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orderItems">
+                                <!-- Order items will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div class="row justify-content-end">
+                        <div class="col-md-6">
+                            <table class="table table-sm">
+                                <tr>
+                                    <td>Tạm tính:</td>
+                                    <td class="text-end" id="subtotal"></td>
+                                </tr>
+                                <tr>
+                                    <td>Phí vận chuyển:</td>
+                                    <td class="text-end" id="shipping"></td>
+                                </tr>
+                                <tr>
+                                    <td>Giảm giá:</td>
+                                    <td class="text-end" id="discount"></td>
+                                </tr>
+                                <tr class="fw-bold">
+                                    <td>Tổng cộng:</td>
+                                    <td class="text-end" id="total"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="updateStatusBtn">Cập nhật trạng thái</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/src/admin/layouts/AdminLayout.js"></script>
+    <script src="orders.js" type="module"></script>
+</body>
+
+</html>

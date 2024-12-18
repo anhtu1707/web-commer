@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Khách Hàng - Phúc An Solutions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/src/admin/layouts/AdminLayout.css" rel="stylesheet">
+    <link href="customers.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <!-- Copy sidebar from dashboard -->
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="admin-header">
+                <!-- Copy header from dashboard -->
+            </header>
+
+            <!-- Customers Content -->
+            <div class="content-wrapper">
+                <div class="container-fluid">
+                    <!-- Page Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="page-title">Quản Lý Khách Hàng</h2>
+                        <div class="page-actions">
+                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exportModal">
+                                <i class="fas fa-file-export me-2"></i>Xuất Excel
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <label class="form-label">Trạng thái</label>
+                                    <select class="form-select" id="statusFilter">
+                                        <option value="">Tất cả</option>
+                                        <option value="active">Đang hoạt động</option>
+                                        <option value="inactive">Không hoạt động</option>
+                                        <option value="blocked">Đã khóa</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Nhóm khách hàng</label>
+                                    <select class="form-select" id="groupFilter">
+                                        <option value="">Tất cả</option>
+                                        <option value="regular">Thường xuyên</option>
+                                        <option value="vip">VIP</option>
+                                        <option value="wholesale">Bán sỉ</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Tìm kiếm</label>
+                                    <input type="text" class="form-control" id="searchCustomer" placeholder="Tìm theo tên, email, số điện thoại...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Customers Table -->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <input type="checkbox" class="form-check-input" id="selectAll">
+                                            </th>
+                                            <th>Mã KH</th>
+                                            <th>Họ tên</th>
+                                            <th>Email</th>
+                                            <th>Số điện thoại</th>
+                                            <th>Nhóm</th>
+                                            <th>Đơn hàng</th>
+                                            <th>Tổng chi tiêu</th>
+                                            <th>Trạng thái</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="customersTableBody">
+                                        <!-- Customer rows will be loaded here -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Pagination -->
+                            <nav aria-label="Page navigation" class="mt-4">
+                                <ul class="pagination justify-content-center" id="pagination">
+                                    <!-- Pagination will be generated here -->
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Detail Modal -->
+    <div class="modal fade" id="customerDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chi tiết khách hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Thông tin cá nhân</h6>
+                            <div id="customerInfo">
+                                <!-- Customer info will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Thống kê</h6>
+                            <div id="customerStats">
+                                <!-- Customer stats will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <h6>Lịch sử đơn hàng</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Mã đơn</th>
+                                        <th>Ngày đặt</th>
+                                        <th>Sản phẩm</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orderHistory">
+                                    <!-- Order history will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/src/admin/layouts/AdminLayout.js"></script>
+    <script src="customers.js" type="module"></script>
+</body>
+
+</html>
